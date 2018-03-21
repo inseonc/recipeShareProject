@@ -1,0 +1,130 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8"/>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Recipe Share Login</title>
+        <!--
+        <link href="bootstrap/css/bootstrap.css" rel="stylesheet"/>
+        <link href="timeline.css" rel="stylesheet"/>
+        <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet"/>
+        -->
+        <link href='{% static "bootstrap/css/bootstrap.css" %}'  rel="stylesheet"/>
+        <link href='{% static "timeline.css" %}',  rel="stylesheet"/>
+        <link href='{% static "bootstrap/css/bootstrap-responsive.css" %}' rel="stylesheet"/>
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target="#navMenu">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="login.html">Brewvie Recipe Share</a>
+                    <div class="nav-collapse" id="navMenu">
+                    	<!--
+                        <div class="btn-group pull-right">
+                            <a class="btn" id="adminBtn">
+                                <i class="icon-pencil"></i>
+                                ADMIN
+                            </a>
+                        </div>
+						-->
+
+                    </div>
+                </div>
+            </div>
+        </div><!-- End of NavBar -->
+        <div class="container bg logincontainer"><!-- Start of Container -->
+
+            <!-- Start of Row -->
+            <div class="row-fluid"> 
+            	<!--
+                <div class="span8">
+                    <div class="inside center loginbox">
+                        <h1 class="bigfont lightblue middlemsg">Smart Brew Recipe Share</h1>
+                    </div>
+                </div>
+				-->
+
+                <div class="span6">
+                	<!--
+                    <div class="inside center loginbox"><br>-->
+                    <div class="inside center loginbox">
+                    	<!--
+                        <div class="alert alert-info">
+                        -->
+                        <div>
+                            <h3>Login</h3>
+                        <!--
+                        <input type="text" id="username" value="username"/> <br>
+                        <input type="password" id="password" value="password"/>
+                        -->
+                        <input type="text" id="username" onfocus="if(this.value == 'username') { this.value = ''; }" value="username"/>
+                        <input type="password" id="password" onfocus="if(this.value == 'password') { this.value = ''; }" value="password"/>
+                        <div class="inside">
+                        	<!--
+                            <a class="btn btn-primary" id="loginBtn"> 
+                                Login
+                            </a>
+                            <a class="btn btn-primary between" id="registerBtn">
+                                Register
+                            </a>
+                           -->
+                            <a class="btn btn-infos" id="loginBtn"> 
+                                Login
+                            </a>
+                            <a class="btn btn-infos between" id="registerBtn">
+                                Register
+                            </a>
+                        </div>
+
+                        </div>
+
+                        <!--
+                        I D : <input type="text" id="username" class="width50"/> <br>
+                        P W : <input type="password" id="password" class="width50"/>
+                        -->
+						<!--
+                        <input type="text" id="username" value="username" onfocus="" onblur="enter your text"/> <br>
+                        <input type="password" id="password" value="password"/>
+                        
+                        <div class="inside">
+                            <a class="btn btn-primary" id="loginBtn"> 
+                                Login
+                            </a>
+                            <a class="btn btn-primary between" id="registerBtn">
+                                Register
+                            </a>
+                        </div>
+                       -->
+                    </div>
+                </div>
+            </div><!-- End of Row -->
+        </div><!-- End of Container -->
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <script src='{% static "bootstrap/js/bootstrap.js" %}'></script>
+        <!--<script src='{% static "timeline.js" %}'></script>-->
+        <!--<script src="base64.js"></script>-->
+        <script type="text/javascript" src='{% static "timeline.js" %}'></script>
+        <script type="text/javascript" src='{% static "base64.js" %}'></script>
+
+        <script>
+            $(document).ready(function() {
+                $("#registerBtn").click(function() {
+                    location.href = "join.html";
+                });
+                $("#loginBtn").click(doLogin);
+                $("#adminBtn").click(goAdmin);
+            });
+       </script>
+  
+    </body>
+</html>

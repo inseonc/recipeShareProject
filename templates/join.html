@@ -1,0 +1,125 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Recipe Share Create Account</title>
+        <!--
+        <link href="bootstrap/css/bootstrap.css" rel="stylesheet"/>
+        <link href="timeline.css" rel="stylesheet"/>
+        <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet"/>
+        -->
+        <link href='{% static "bootstrap/css/bootstrap.css" %}'  rel="stylesheet"/>
+        <link href='{% static "timeline.css" %}',  rel="stylesheet"/>
+        <link href='{% static "bootstrap/css/bootstrap-responsive.css" %}' rel="stylesheet"/>
+    </head>
+    <body>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <!--<script src="bootstrap/js/bootstrap.js"></script>-->
+        <!--<script src="timeline.js"></script>-->
+        <script src='{% static "bootstrap/js/bootstrap.js" %}'></script>
+        <script type="text/javascript" src='{% static "timeline.js" %}'></script>
+        <script type="text/javascript" src='{% static "base64.js" %}'></script>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target="#navMenu">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="login.html">Brewvie Recipe Share</a>
+                    <div class="nav-collapse" id="navMenu">
+                    	<!--
+                        <div class="btn-group pull-right">
+                            <a class="btn" id="adminBtn">
+                                <i class="icon-pencil"></i>
+                                ADMIN
+                            </a>
+                        </div>
+                       -->
+                    </div>
+                </div>
+            </div>
+        </div><!-- End of NavBar -->
+
+		<div class="container">
+            <!-- Start of Container -->
+            <div class="row-fluid-an">
+                <!-- Start of Row -->
+                <div class="span12">
+                    <div class="inside center">
+                        <br>
+                        <div class="lighblue">
+                            <h1>Brewvie Recipe Share</h1>
+                        </div>
+                        <div>
+                            <h1>Create Account</h1>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div><!-- End of Row -->
+            <div class="row-fluid-an">
+                <!-- Start of Row2 -->
+                <div class="span12">
+                    <div class="inside center">
+                        <h2>ID</h2>
+                        <input type="text" placeholder="Input Your ID" id="username"/>
+                    </div>
+                </div>
+                <div class="span12">
+                    <div class="inside center">
+                        <h2>PASSWORD</h2>
+                        <input type="text" placeholder="Input your Password" id="password"/>
+                    </div>
+                </div>
+            </div><!-- End of Row 2 -->
+            <div class="row-fluid-an">
+                <!-- Start of Row3 -->
+                <div class="span12">
+                    <div class="inside center">
+                        <h2>NAME</h2>
+                        <input type="text" placeholder="Input your Name" id="name"/>
+                    </div>
+                </div>
+            </div><!-- End of Row3 -->
+            <div class="row-fluid">
+                <!-- Start of Row 4 -->
+                <div class="span12">
+                    <div class="inside center">
+                        <a class="btn btn-large btn-info" id="joinBtn">Join Now!</a>
+                    </div>
+                </div>
+            </div><!-- End of Row 4 -->
+        </div><!-- End of Container -->
+
+        <script>
+            $(document).ready(function() {
+                $("#joinBtn").click(function() {
+                    var name = $("#name").val();
+                    var username = $("#username").val();
+                    var password = $("#password").val();
+                    
+                    if (name != "" && username != "" && password != "")
+                        doJoin();
+                    else 
+                        alert("Fill all forms");
+                });
+                $("#adminBtn").click(goAdmin);
+            });
+        </script>
+
+        
+        
+        <script>
+            $(document).ready(function() {
+                
+            });
+
+       </script>
+    </body>
+</html>
+

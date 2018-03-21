@@ -1,0 +1,485 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Recipe Share Timeline</title>
+        <!--
+        <link href="bootstrap/css/bootstrap.css" rel="stylesheet"/>
+        <link href="timeline.css" rel="stylesheet"/>
+        <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet"/>
+        -->
+        <link href='{% static "bootstrap/css/bootstrap.css" %}'  rel="stylesheet"/>
+        <link href='{% static "timeline.css" %}',  rel="stylesheet"/>
+        <link href='{% static "bootstrap/css/bootstrap-responsive.css" %}' rel="stylesheet"/>
+        
+        <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+        
+		<script src='{% static "bootstrap/js/bootstrap.js" %}'></script>
+        <!--<script type="text/javascript" src='{% static "timeline.js?v=<%=System.currentTimeMillis() %>" %}'></script>-->
+        <script type="text/javascript" src='{% static "timeline.js" %}'></script>
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<!--
+		<link rel="stylesheet" href="assets/css/main.css" />
+		-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		
+		<!--<link rel="stylesheet" href='{% static "assets/css/main.css" %}' />-->
+
+    </head>
+    <body>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <!--
+        <script src="bootstrap/js/bootstrap.js"></script>
+        <script src="timeline.js"></script>
+        <script src="base64.js"></script>
+        -->
+        <!--
+        <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+        
+		<script src='{% static "bootstrap/js/bootstrap.js" %}'></script>
+		--?
+        <!--<script type="text/javascript" src='{% static "timeline.js?v=<%=System.currentTimeMillis() %>" %}'></script>-->
+        <!--
+        <script type="text/javascript" src='{% static "timeline.js" %}'></script>
+        -->
+        <!--
+			<script src='{% static "assets/js/jquery.min.js" %}'></script>
+			<script src='{% static "assets/js/skel.min.js" %}'></script>
+			<script src='{% static "assets/js/util.js" %}'></script>
+			<script src='{% static "assets/js/main.js" %}'></script>
+		-->
+		
+		
+
+
+<!--
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+-->
+
+<!--
+<script type="text/javascript">
+	$(function() {
+	    jQuery.noConflict();    
+	    formdata = new FormData();      
+	    jQuery("#image_to_upload").on("change", function() {
+	        var file = this.files[0];
+	        if (formdata) {
+	            formdata.append("image", file);
+	            jQuery.ajax({
+	                url: baseUrl + 'api/recipeShareApp/create/',
+	                type: "POST",
+	                data: formdata,
+	                processData: false,
+	                contentType: false,
+	                success:function(){}
+	            });
+	        }                       
+	    }); 
+	});
+</script>
+-->
+
+    <script type="text/javascript">
+        $(function() {
+            
+            $("#imgInp").on('change', function(){
+            	
+                readURL(this);
+            });
+
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                    $('#blah').attr('src', e.target.result);
+               };
+
+              reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+
+    </script>
+    
+
+<script>
+
+
+function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+ 
+    // Loop through the FileList and render image files as thumbnails.
+    for (var i = 0, f; f = files[i]; i++) {
+         // Only process image files.
+        if (!f.type.match('image.*')) {
+            continue;
+        }
+        var reader = new FileReader();
+        // Closure to capture the file information.
+        reader.onload = (function (theFile) {
+            return function (e) {
+                // Render thumbnail.
+                var span = document.createElement('span');
+                span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                        '" title="', escape(theFile.name), '"/>'].join('');
+                document.getElementById('list').insertBefore(span, null);
+            };
+        })(f);
+ 
+        // Read in the image file as a data URL.
+        reader.readAsDataURL(f);
+    }
+}
+</script>
+
+		<script>
+		var uploadfile;
+		    $(document).ready(function() {
+		        getLoginString();
+		        doGetTimeline();
+		        $('#adminBtn').click(goAdmin);
+		        //$('#writeBtn').click(doWriteTimeline);
+		        
+		        
+		       
+				$(function() {
+				    jQuery.noConflict();    
+				    formdata = new FormData();      
+				    jQuery("#image_to_upload").on("change", function() {
+				    	uploadfile = this.files[0];
+						formdata.append("image", uploadfile);
+				    	/*
+				    	file = this.files[0];
+				        if (formdata) {
+				            formdata.append("image", file);
+				            jQuery.ajax({
+				                url: baseUrl + 'api/recipeShareApp/create/',
+				                type: "POST",
+				                data: formdata,
+				                processData: false,
+				                contentType: false,
+				                success:function(){}
+				            });
+				        }        
+				        */               
+				    }); 
+				});
+		        
+		        $(document).on('click', '#writeBtn', function () {
+		        	
+				    jQuery.noConflict();    
+				    //formdata = new FormData();      
+					var msg = $("#writearea").val();
+					formdata.append("message", msg);
+					
+					var dataArr = {
+					  message: msg,
+					};    			
+
+				        jQuery.ajax({
+				            url: baseUrl + 'api/recipeShareApp/create/',
+				            //url : 'http://127.0.0.1:8000/api/recipeShareApp/create/',
+				            type: "POST",
+				            //data: {message: msg},
+				            //data: dataArr,
+				            data: formdata,
+
+				            processData: false,
+				            contentType: false,
+				            //success:function(){}
+			                beforeSend : function(req) {
+			                    req.setRequestHeader('Authorization', loginstring);
+			                },
+			                success : function(data) {
+			                	alert("upload!");
+			                    doReload();
+			                },
+			                error : function(msg) {
+			                    alert("Fail to upload data!");
+			                }
+				        });
+		        });		        
+		        
+		        
+		        $('#reloadBtn').click(doReload);
+		        $(document).on("click", "[name=deleteMsg]", function(e) {
+		            var id = e.target.getAttribute('value');
+		            // alert(tmp);
+		 
+		            $.ajax({
+		                type : 'POST',
+		                //url : 'http://127.0.0.1:8000/api/recipeShareApp/' + id + "/delete/",
+		                url : baseUrl + 'api/recipeShareApp/' + id + '/delete/',
+		                beforeSend : function(req) {
+		                    req.setRequestHeader('Authorization', loginstring);
+		                },
+		                success : function(data) {
+		                    doReload();
+		                },
+		                error : function(msg) {
+		                    alert("Fail to delete data!");
+		                }
+		            });
+		 
+		        });
+		        $("#searchBtn").click(doSearchTimeline);
+		        $("#logoutBtn").click(doLogout);
+		 
+		    });
+	 
+		</script>
+		
+       <script>
+			$(document).on("click", "[name=like]", function(e) {
+			    var id = e.target.getAttribute('value');
+			 
+			    $.ajax({
+			        type : 'POST',
+			        url : baseUrl + 'api/recipeShareApp/' + id + '/like/',
+			        beforeSend : function(req) {
+			            req.setRequestHeader('Authorization', loginstring);
+			        },
+			        success : function() {
+			            doReload();
+			        },
+			        error : function(msg) {
+			            alert("Fail to set data!");
+			        }
+			    });
+			});
+		</script>
+		
+		<script>
+			$(document).on("click", ".name.lightblue", function(e) {
+			    var username = $(this).html();
+			    
+			    $.ajax({
+			        type: 'GET',
+			        url: baseUrl + 'api/profile/' + username + '/',
+			        beforeSend: function(req){
+			            req.setRequestHeader('Authorization', loginstring);
+			        },
+			        success: function(data) {
+			            $("#modalid").html(data.username);
+			            $("#modalnickname").html(data.nickname);
+			            $("#modalcountry").html(data.country);
+			            $("#modalcomment").html(data.comment);
+			            $("#modalurl").html(data.url);
+			            $("#myModal").modal("show");
+			        },
+			        error: function(msg) {
+			            alert("Fail to get data!~#^");
+			        }
+			    });
+			});
+		</script>
+
+		<script>        
+		        function uploadFile(){
+                var form = $('#blah')[0];
+                var formData = new FormData(form);
+                formData.append("fileObj", $("#FILE_TAG")[0].files[0]);
+                //formData.append("fileObj2", $("#FILE_TAG2")[0].files[0]);
+ 
+                $.ajax({
+                    url: baseUrl + 'api/recipeShareApp/create/',
+                            processData: false,
+                            contentType: false,
+                            data: formData,
+                            type: 'POST',
+                            success: function(result){
+                                alert("?낅줈???깃났!!");
+                            }
+                    });
+            }
+		</script>      
+		<div class="navbar navbar-inverse navbar-fixed-top">
+		    <div class="navbar-inner">
+		        <div class="container">
+		            <a class="btn btn-navbar" data-toggle="collapse" data-target="#navMenu"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
+		            <a class="brand" href="#">Brewvie Recipe Share</a>
+		            <div class="nav-collapse"id="navMenu">
+		                <ul class="nav center">
+		                    <li class="active">
+		                        <a href="#">Home</a>
+		                    </li>
+		                    <!--
+		                    <li>
+		                        <a href="profile.html">Profile</a>
+		                    </li>
+		                    -->
+		                    <li>
+		                        <a href="account.html">Account</a>
+		                    </li>
+		                    
+		                    <li>
+		                        <a id="logoutBtn">logout</a>
+		                    </li>
+		                    <li>
+		                        <a id="adminBtn">Admin</a>
+		                    </li>
+		                    
+		                </ul>
+		                <!--
+		                <div class="btn-group pull-right">
+		                    <a class="btn" id="adminBtn">
+		                        <i class="icon-pencil"></i>
+		                        Admin
+		                        <span class="caret"></span>
+		                    </a>
+		                    <a class="btn" id="logoutBtn">
+		                        <i class="icon-user"></i>
+		                        Logout
+		                        <span class="caret"></span>
+		                    </a>
+		                </div>
+		                -->
+		                
+		            </div>
+		        </div>
+		    </div>
+		</div><!-- End of NavBar -->
+		
+        <div class="container bg">
+            <!-- Start of Container -->
+            
+
+
+		<!-- Scripts -->
+
+            <div class="timeline span12">
+
+                <!-- Start of timeline -->
+                <!--
+                <div class="span12 bottom15">
+                -->
+				<div class="span12">
+					<!--
+                    <div class="roundinside bottom15 center">
+					-->
+					<div class="roundinside center">
+                    <div class="roundinside span3" id="msgTemplate" style="display: none;">
+						<!--
+                        <div class="name lightblue">
+                        </div>
+                       -->
+                        <div class="name grey-color-id">
+                        </div>
+                        <div class="content grey-color-content">
+                            <a class="btn close" name="deleteMsg">Delete</a>
+                        </div>
+
+						
+						<!--<span class="content_img" id="content_img" name="content_img">-->
+						<span id="content_img" name="content_img">
+     							<!--
+								<img src='{% static "../media/photo/2017/10/17/Penguins.jpg" %}' alt="" />
+								-->
+
+								<!--
+								<a id="id_uploaded_file" href="{ message.photo.url }" download>{ message.photo.url }</a>
+								-->
+						</span>                        
+                        
+                        <span class="date">
+                        	
+                        </span>
+                        
+                        <span class="like"> 
+                        	<a class="btn" id="like" name="like"> 
+                        		<i class="icon-chevron-up">
+                        		
+                        		</i> 
+                        	</a> 
+                        </span>
+                        
+                    </div>
+					
+ 					
+                    <div id="timelinearea">
+ 
+                    </div>
+                    <!--
+                    <fieldset>
+                        <label class="lightblue bold leftalign" for="textarea"> Compose New Message </label>
+                        <textarea class="input-xlarge span6" id="writearea" name="content" rows="3"></textarea>
+                        <div>
+                            <a class="btn btn-primary" id="writeBtn" > Write </a>
+                            <a class="btn btn-info between" id="reloadBtn"> Refresh </a>
+                            <input type="file" id="image_to_upload"/>
+                        </div>
+                    </fieldset>
+                    -->
+                </div>
+                </div>
+            </div>
+                
+            <fieldset>
+                <label class="lightblue bold leftalign" for="textarea"> Compose New Message </label>
+                <textarea class="input-xlarge span6" id="writearea" name="content" rows="3"></textarea>
+                <div>
+                    <a class="btn btn-primary" id="writeBtn" > Write </a>
+                    <a class="btn btn-info between" id="reloadBtn"> Refresh </a>
+                    <input type="file" id="image_to_upload"/>
+                </div>
+            </fieldset>                
+                <!--
+                <div class="span4 submenu">
+                    <div class="roundinside">
+                        <span> ID: </span>
+                        <span id="username">
+                        	
+                        </span>
+                    </div>
+                    <div class="roundinside">
+                        <div class="pagination pagination-centered">
+                            <ul>
+                                <li>
+                                    <a><strong id="total"></strong>Total Timeline</a>
+                                </li>
+                                <li>
+                                    <a><strong id="mine"></strong>My Timeline</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="roundinside center bottom15">
+                        <input type="text" class="search" id="search" />
+                        <a class="btn btn-info" id="searchBtn">
+                            <i class="icon-search"></i>
+                        </a>
+                    </div>
+                </div>
+                -->
+            </div><!-- End of Timeline -->
+        </div><!-- End of Container -->
+        
+        <!--<div class="modal hide fade" id="myModal">-->
+        <!--
+        <div class="modal" id="myModal">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    x
+                </button>
+                <h2><span id="modalid"></span>'s Info</h2>
+            </div>
+            <div class="modal-body">
+                <h3>Nick: <span id="modalnickname"></span></h3>
+                <h3>Country: <span id="modalcountry"></span></h3>
+                <h3>URL: <span id="modalurl"></span></h3>
+                <h3>Comment: <span id="modalcomment"></span></h3>
+            </div>
+        </div>
+        -->
+        <!-- End of MyModal -->
+       
+    </body>
+</html>
+
